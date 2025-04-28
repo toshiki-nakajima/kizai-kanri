@@ -1,7 +1,6 @@
 
-import {ActionFunction, ActionFunctionArgs, createCookieSessionStorage} from "@remix-run/node";
+import { createCookieSessionStorage} from "@remix-run/node";
 import { randomBytes } from "crypto";
-import {getSession} from "@remix-run/dev/dist/vite/profiler";
 
 const CSRF_TOKEN_KEY = "csrfToken";
 

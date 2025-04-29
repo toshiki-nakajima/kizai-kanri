@@ -7,7 +7,6 @@ import {destroySession, getSession} from "~/utils/session.server";
 export const loader: LoaderFunction = async ({ request }) => {
     const user = await requireUser(request);
 
-
     return data({ user });
 };
 
@@ -38,7 +37,7 @@ export default function Dashboard() {
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800 mb-2">ユーザー情報</h2>
                     <ul className="list-disc list-inside">
-                        <li>role: {user.role}</li>
+                        <li>user mail: {user.email}</li>
                         {/* 他のユーザー情報をここに追加 */}
                     </ul>
                 </div>

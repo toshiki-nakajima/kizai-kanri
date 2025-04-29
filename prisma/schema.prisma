@@ -19,6 +19,16 @@ model User {
   password  String?  @db.VarChar
   createdAt DateTime @default(now()) @db.Timestamptz
   updatedAt DateTime @updatedAt @db.Timestamptz
-  role      String   @default("USER") @db.VarChar(50)
+  manager_id String? @db.Uuid
+  manager   Manager? @relation(fields: [manager_id], references: [id], onDelete: Cascade)
+}
+
+model Manager {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String   @unique @db.VarChar
+  password  String?  @db.VarChar
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @updatedAt @db.Timestamptz
+  users     User[]
 }
 

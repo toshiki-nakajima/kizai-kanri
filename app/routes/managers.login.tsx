@@ -58,16 +58,16 @@ export default function Login() {
     const actionData = useActionData<ActionData>();
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-                <h1 className="text-2xl font-bold text-center text-gray-800">managerログイン</h1>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
+                <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white">managerログイン</h1>
                 <Form method="post" className="space-y-4">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white">
                             メールアドレス
                         </label>
                         <input
-                            className="w-full px-4 py-2 mt-1 text-sm border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-4 py-2 mt-1 text-sm border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:border-gray-600 dark:text-white"
                             name="email"
                             type="email"
                             placeholder="Email"
@@ -75,11 +75,11 @@ export default function Login() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-white">
                             パスワード
                         </label>
                         <input
-                            className="w-full px-4 py-2 mt-1 text-sm border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-4 py-2 mt-1 text-sm border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:border-gray-600 dark:text-white"
                             name="password"
                             type="password"
                             placeholder="Password"

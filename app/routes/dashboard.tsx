@@ -26,22 +26,22 @@ interface LoaderData {
 export default function Dashboard() {
     const { user } = useLoaderData<LoaderData>();
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+            <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md dark:bg-gray-700 dark:text-white">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4 dark:text-white">
                     ようこそ、{user.email} さん
                 </h1>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 mb-4 dark:text-gray-300">
                     ここはダッシュボードです。ユーザー情報を表示しています。
                 </p>
                 <div>
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">ユーザー情報</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">ユーザー情報</h2>
                     <ul className="list-disc list-inside">
                         <li>user mail: {user.email}</li>
                         {/* 他のユーザー情報をここに追加 */}
                     </ul>
                 </div>
-                <Form method="post" className="text-center">
+                <Form method="post" className="text-center py-4">
                     <button
                         type="submit"
                         className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"

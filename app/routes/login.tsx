@@ -1,10 +1,17 @@
-import {ActionFunction, data, redirect} from "@remix-run/node";
+import {ActionFunction, LoaderFunction, data, redirect} from "@remix-run/node";
 import { commitSession, getSession } from "~/utils/session.server";
 import {Form, useActionData} from "@remix-run/react";
 // import bcrypt from "bcryptjs";
 import {getSessionExpirationDate} from "~/utils/session-expirty"; // compareするため
 import {User} from "~/types/user";
 import { PrismaClient } from "@prisma/client";
+import {redirectForAuthenticatedUser} from "~/utils/auth.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+    await redirectForAuthenticatedUser(request);
+
+    return null; // ログインしていない場合はそのまま表示
+};
 
 export const action: ActionFunction = async ({ request }) => {
     const formData = await request.formData();

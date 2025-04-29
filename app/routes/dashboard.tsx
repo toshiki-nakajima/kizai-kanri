@@ -28,7 +28,7 @@ export default function Dashboard() {
     const { user } = useLoaderData<LoaderData>();
     return (
         <div>
-            <h1>ようこそ、{user.name} さん</h1>
+            <h1 className={`font-bold`}>ようこそ、{user.email} さん</h1>
             <Form method="post">
                 <button type="submit">ログアウト</button>
             </Form>

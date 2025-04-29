@@ -3,7 +3,8 @@ import { commitSession, getSession } from "~/utils/session.server";
 import {Form, useActionData} from "@remix-run/react";
 // import bcrypt from "bcryptjs";
 import {getSessionExpirationDate} from "~/utils/session-expirty"; // compareするため
-import {User} from "~/types/user"; // ユーザーの型をインポート
+import {User} from "~/types/user";
+import { PrismaClient } from "@prisma/client";
 
 export const action: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
@@ -17,15 +18,8 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     // 通常はここでDBからユーザーを探すが…
-    // const user = await db.user.findUnique({ where: { email } });
-
-    // DBにユーザーがいたとして仮のユーザー情報（実際はDBから取得してから格納）
-    const user = {
-        id: "user-123",
-        name: "Alice",
-        passwordHash: "$2a$10$EIX5Q1Z5Y3g6v8x4z5J9Oe7Q0q1j1Fh4G3k5K5l5Z5Z5Z5Z5Z5Z5Z", // bcryptでハッシュ化されたパスワード
-        role: "admin",
-    };
+    const prisma = new PrismaClient();
+    const user = await prisma.user.findUnique({ where: { email } });
 
     // パスワードの検証（本来はDBから取得したユーザー情報を使う）
     // if (!user || !(await bcrypt.compare(password, user.passwordHash))) {

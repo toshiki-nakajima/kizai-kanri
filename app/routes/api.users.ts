@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     const users = await prisma.user.findMany({
         where: {
-            manager_id: manager.id,
+            managerId: manager.id,
         },
         // include: {
         //     manager: true,
@@ -41,7 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
         }
 
         const newUser = await prisma.user.create({
-            data: { email, password, manager_id: id },
+            data: { email, password, managerId: id },
         });
 
         return data(newUser, { status: 201 });

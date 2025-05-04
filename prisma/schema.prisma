@@ -60,7 +60,8 @@ model Equipment {
   name                   String                   @unique @db.VarChar
   createdAt              DateTime                 @default(now()) @db.Timestamptz
   updatedAt              DateTime                 @updatedAt @db.Timestamptz
-  reservations EquipmentOnReservation[]
+  reservations           EquipmentOnReservation[]
+  stock                  Int                      @default(0) // 在庫数を表すフィールドを追加
 }
 
 model EquipmentOnReservation {
@@ -68,5 +69,7 @@ model EquipmentOnReservation {
   equipmentId   BigInt
   reservation   Reservation @relation(fields: [reservationId], references: [id])
   equipment     Equipment   @relation(fields: [equipmentId], references: [id])
+  quantity      Int         @default(1) // 使用数を表すフィールドを追加
   @@id([equipmentId, reservationId])
 }
+

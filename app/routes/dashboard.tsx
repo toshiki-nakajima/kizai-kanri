@@ -1,16 +1,25 @@
 import {ActionFunction, data, LoaderFunction, redirect} from "@remix-run/node";
 import {Form, useLoaderData} from "@remix-run/react";
-import { requireUser } from "~/utils/auth.server";
+import {requireUser} from "~/utils/auth.server";
 import {User} from "~/types/user";
 import {destroySession, getSession} from "~/utils/session.server";
+import {getEquipmentUsageByDate} from "~/utils/culculator.server"; // 追加
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({request}) => {
     const user = await requireUser(request);
+    await (async () => {
+        const equipmentId = BigInt(1); // 対象の機材ID
+        const startDate = "2025-05-01";
+        const endDate = "2025-05-03";
 
-    return data({ user });
+        const usageByDate = await getEquipmentUsageByDate(equipmentId, startDate, endDate);
+        console.log(usageByDate);
+    })();
+
+    return data({user});
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({request}) => {
     const session = await getSession(request.headers.get("Cookie"));
     return redirect("/login", {
         headers: {
@@ -24,7 +33,7 @@ interface LoaderData {
 }
 
 export default function Dashboard() {
-    const { user } = useLoaderData<LoaderData>();
+    const {user} = useLoaderData<LoaderData>();
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
             <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md dark:bg-gray-700 dark:text-white">

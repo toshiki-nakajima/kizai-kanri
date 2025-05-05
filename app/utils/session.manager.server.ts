@@ -3,7 +3,7 @@ import * as process from "node:process";
 
 export const sessionStorage = createCookieSessionStorage({
     cookie: {
-        name: "__session",
+        name: "__manager_session",
         secrets: [(process.env.SESSION_SECRET ?? "your-secret")],
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
@@ -13,4 +13,5 @@ export const sessionStorage = createCookieSessionStorage({
     },
 });
 
+process.env
 export const { getSession, commitSession, destroySession } = sessionStorage;

@@ -1,14 +1,14 @@
 import {ActionFunction, LoaderFunction, data, redirect} from "@remix-run/node";
-import { commitSession, getSession } from "~/utils/session.server";
+import { commitSession, getSession } from "~/utils/session.manager.server";
 import {Form, useActionData} from "@remix-run/react";
 // import bcrypt from "bcryptjs";
 import {getSessionExpirationDate} from "~/utils/session-expirty"; // compareするため
 import {User} from "~/types/user";
 import { PrismaClient } from "@prisma/client";
-import {redirectForAuthenticatedUser} from "~/utils/auth.server";
+import {redirectForAuthenticatedManager} from "~/utils/auth.manager.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
-    await redirectForAuthenticatedUser(request);
+    await redirectForAuthenticatedManager(request);
 
     return null; // ログインしていない場合はそのまま表示
 };
@@ -26,8 +26,8 @@ export const action: ActionFunction = async ({ request }) => {
 
     // 通常はここでDBからユーザーを探すが…
     const prisma = new PrismaClient();
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) {
+    const manager = await prisma.manager.findUnique({ where: { email } });
+    if (!manager) {
         return data({ error: "メールアドレスまたはパスワードが違います" }, { status: 401 });
     }
 
@@ -37,12 +37,13 @@ export const action: ActionFunction = async ({ request }) => {
     // }
 
     const session = await getSession();
-    session.set("user", user);
+    session.set("manager", manager);
 
     // 24時にセッションが切れるようにする
     const expires = getSessionExpirationDate();
+    const managerId = manager.id;
 
-    return redirect("/reservations", {
+    return redirect(`/managers/${managerId}`, {
         headers: {
             "Set-Cookie": await commitSession(session, { expires }),
         },
@@ -59,7 +60,7 @@ export default function Login() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
             <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
-                <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white">ログイン</h1>
+                <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white">managerログイン</h1>
                 <Form method="post" className="space-y-4">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white">

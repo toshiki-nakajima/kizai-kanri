@@ -5,7 +5,7 @@ csrf
 
 認証
 - login.tsx
-- dashboard.tsx
+- reservations.tsx
 - api.profile.ts
 - utils/auth.server.ts
 - utils/session.server.ts

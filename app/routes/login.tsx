@@ -42,7 +42,7 @@ export const action: ActionFunction = async ({ request }) => {
     // 24時にセッションが切れるようにする
     const expires = getSessionExpirationDate();
 
-    return redirect("/dashboard", {
+    return redirect("/reservations", {
         headers: {
             "Set-Cookie": await commitSession(session, { expires }),
         },

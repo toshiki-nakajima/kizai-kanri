@@ -1,0 +1,58 @@
+import {data, LoaderFunction} from "@remix-run/node";
+import {Form, useLoaderData} from "@remix-run/react";
+import {requireUser} from "~/utils/auth.server";
+import {User} from "~/types/user";
+import {getEquipmentUsageByDate} from "~/utils/culculator.server";
+import UserLayout from "~/components/userLayout"; // 追加
+
+export const loader: LoaderFunction = async ({request}) => {
+    const user = await requireUser(request);
+    await (async () => {
+        const equipmentId = BigInt(1); // 対象の機材ID
+        const startDate = "2025-05-01";
+        const endDate = "2025-05-03";
+
+        const usageByDate = await getEquipmentUsageByDate(equipmentId, startDate, endDate);
+        console.log(usageByDate);
+    })();
+
+    return data({user});
+};
+
+interface LoaderData {
+    user: User;
+}
+
+export default function Reservations() {
+    const {user} = useLoaderData<LoaderData>();
+    return (
+        <UserLayout user={user}>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+                <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md dark:bg-gray-700 dark:text-white">
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4 dark:text-white">
+                        ようこそ、{user.email} さん
+                    </h1>
+                    <p className="text-gray-600 mb-4 dark:text-gray-300">
+                        ここはダッシュボードです。ユーザー情報を表示しています。
+                    </p>
+                    <div>
+                        <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">ユーザー情報</h2>
+                        <ul className="list-disc list-inside">
+                            <li>user mail: {user.email}</li>
+                            {/* 他のユーザー情報をここに追加 */}
+                        </ul>
+                    </div>
+                    <Form method="post" action={`/logout`} className="text-center py-4">
+                        <button
+                            type="submit"
+                            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+                        >
+                            ログアウト
+                        </button>
+                    </Form>
+                </div>
+            </div>
+        </UserLayout>
+    )
+}
+

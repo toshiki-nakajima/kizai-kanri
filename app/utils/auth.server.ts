@@ -17,6 +17,6 @@ export async function redirectForAuthenticatedUser(request: Request) {
     const user = session.get("user");
 
     if (user) {
-        throw redirect("/dashboard");
+        throw redirect("/reservations");
     }
 }

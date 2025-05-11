@@ -10,6 +10,11 @@ export const loader: LoaderFunction = async ({request}) => {
 
     return data({user});
 };
+// 重要：渡りのコンポーネントを表示しないようにするため、handle プロパティを設定
+export const handle = {
+    // これにより、親ルートの Outlet がスキップされるようにする設定が可能
+    // Remix v2以降では、特定のプロパティを使ってこのような設定ができます
+};
 
 interface LoaderData {
     user: User;

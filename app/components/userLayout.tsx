@@ -59,7 +59,7 @@ export default function UserLayout({user, headerTitle, children}: {
                                                 : inactiveRouteClassName
                                         }
                                     >
-                                        機材登録
+                                        機材管理
                                     </Link>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@ export default function UserLayout({user, headerTitle, children}: {
                                                     現場スケジュール
                                                 </Link></li>
                                                 <li className={`px-4 py-2 dark:text-white`}><Link to="/equipments">
-                                                    機材登録
+                                                    機材管理
                                                 </Link></li>
                                             </ul>
                                             <hr className="dark:text-white" />
